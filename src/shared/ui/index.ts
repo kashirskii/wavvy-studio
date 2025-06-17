@@ -1,5 +1,3 @@
 export * from './button'
 export * from './avatar'
 export * from './separator'
-export * from './table'
-export * from './checkbox'
