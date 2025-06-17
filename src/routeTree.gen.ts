@@ -43,13 +43,11 @@ const LayoutCommunityIndexRoute = LayoutCommunityIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutChannelSettingsIndexRoute = LayoutChannelSettingsIndexImport.update(
-  {
-    id: '/channel-settings/',
-    path: '/channel-settings/',
-    getParentRoute: () => LayoutRoute,
-  } as any,
-)
+const LayoutChannelSettingsIndexRoute = LayoutChannelSettingsIndexImport.update({
+  id: '/channel-settings/',
+  path: '/channel-settings/',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 const LayoutAnalyticsIndexRoute = LayoutAnalyticsIndexImport.update({
   id: '/analytics/',
@@ -124,8 +122,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutContentManagerIndexRoute: LayoutContentManagerIndexRoute,
 }
 
-const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
+const LayoutRouteWithChildren = LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
@@ -156,20 +153,9 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/'
-    | '/analytics'
-    | '/channel-settings'
-    | '/community'
-    | '/content-manager'
+  fullPaths: '' | '/' | '/analytics' | '/channel-settings' | '/community' | '/content-manager'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/analytics'
-    | '/channel-settings'
-    | '/community'
-    | '/content-manager'
+  to: '/' | '/analytics' | '/channel-settings' | '/community' | '/content-manager'
   id:
     | '__root__'
     | '/_layout'
