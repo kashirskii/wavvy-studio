@@ -11,182 +11,152 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as LayoutImport } from './routes/_layout'
-import { Route as LayoutIndexImport } from './routes/_layout/index'
-import { Route as LayoutContentManagerIndexImport } from './routes/_layout/content-manager/index'
-import { Route as LayoutCommunityIndexImport } from './routes/_layout/community/index'
-import { Route as LayoutChannelSettingsIndexImport } from './routes/_layout/channel-settings/index'
-import { Route as LayoutAnalyticsIndexImport } from './routes/_layout/analytics/index'
+import { Route as ContentManagerIndexImport } from './routes/content-manager/index'
+import { Route as CommunityIndexImport } from './routes/community/index'
+import { Route as ChannelSettingsIndexImport } from './routes/channel-settings/index'
+import { Route as AnalyticsIndexImport } from './routes/analytics/index'
+import { Route as VideoIdEditIndexImport } from './routes/video/$id/edit/index'
 
 // Create/Update Routes
 
-const LayoutRoute = LayoutImport.update({
-  id: '/_layout',
+const ContentManagerIndexRoute = ContentManagerIndexImport.update({
+  id: '/content-manager/',
+  path: '/content-manager/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutIndexRoute = LayoutIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutContentManagerIndexRoute = LayoutContentManagerIndexImport.update({
-  id: '/content-manager/',
-  path: '/content-manager/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutCommunityIndexRoute = LayoutCommunityIndexImport.update({
+const CommunityIndexRoute = CommunityIndexImport.update({
   id: '/community/',
   path: '/community/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutChannelSettingsIndexRoute = LayoutChannelSettingsIndexImport.update(
-  {
-    id: '/channel-settings/',
-    path: '/channel-settings/',
-    getParentRoute: () => LayoutRoute,
-  } as any,
-)
+const ChannelSettingsIndexRoute = ChannelSettingsIndexImport.update({
+  id: '/channel-settings/',
+  path: '/channel-settings/',
+  getParentRoute: () => rootRoute,
+} as any)
 
-const LayoutAnalyticsIndexRoute = LayoutAnalyticsIndexImport.update({
+const AnalyticsIndexRoute = AnalyticsIndexImport.update({
   id: '/analytics/',
   path: '/analytics/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => rootRoute,
+} as any)
+
+const VideoIdEditIndexRoute = VideoIdEditIndexImport.update({
+  id: '/video/$id/edit/',
+  path: '/video/$id/edit/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_layout': {
-      id: '/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/_layout/': {
-      id: '/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/analytics/': {
-      id: '/_layout/analytics/'
+    '/analytics/': {
+      id: '/analytics/'
       path: '/analytics'
       fullPath: '/analytics'
-      preLoaderRoute: typeof LayoutAnalyticsIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AnalyticsIndexImport
+      parentRoute: typeof rootRoute
     }
-    '/_layout/channel-settings/': {
-      id: '/_layout/channel-settings/'
+    '/channel-settings/': {
+      id: '/channel-settings/'
       path: '/channel-settings'
       fullPath: '/channel-settings'
-      preLoaderRoute: typeof LayoutChannelSettingsIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof ChannelSettingsIndexImport
+      parentRoute: typeof rootRoute
     }
-    '/_layout/community/': {
-      id: '/_layout/community/'
+    '/community/': {
+      id: '/community/'
       path: '/community'
       fullPath: '/community'
-      preLoaderRoute: typeof LayoutCommunityIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof CommunityIndexImport
+      parentRoute: typeof rootRoute
     }
-    '/_layout/content-manager/': {
-      id: '/_layout/content-manager/'
+    '/content-manager/': {
+      id: '/content-manager/'
       path: '/content-manager'
       fullPath: '/content-manager'
-      preLoaderRoute: typeof LayoutContentManagerIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof ContentManagerIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/video/$id/edit/': {
+      id: '/video/$id/edit/'
+      path: '/video/$id/edit'
+      fullPath: '/video/$id/edit'
+      preLoaderRoute: typeof VideoIdEditIndexImport
+      parentRoute: typeof rootRoute
     }
   }
 }
 
 // Create and export the route tree
 
-interface LayoutRouteChildren {
-  LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutAnalyticsIndexRoute: typeof LayoutAnalyticsIndexRoute
-  LayoutChannelSettingsIndexRoute: typeof LayoutChannelSettingsIndexRoute
-  LayoutCommunityIndexRoute: typeof LayoutCommunityIndexRoute
-  LayoutContentManagerIndexRoute: typeof LayoutContentManagerIndexRoute
-}
-
-const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutIndexRoute: LayoutIndexRoute,
-  LayoutAnalyticsIndexRoute: LayoutAnalyticsIndexRoute,
-  LayoutChannelSettingsIndexRoute: LayoutChannelSettingsIndexRoute,
-  LayoutCommunityIndexRoute: LayoutCommunityIndexRoute,
-  LayoutContentManagerIndexRoute: LayoutContentManagerIndexRoute,
-}
-
-const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
-
 export interface FileRoutesByFullPath {
-  '': typeof LayoutRouteWithChildren
-  '/': typeof LayoutIndexRoute
-  '/analytics': typeof LayoutAnalyticsIndexRoute
-  '/channel-settings': typeof LayoutChannelSettingsIndexRoute
-  '/community': typeof LayoutCommunityIndexRoute
-  '/content-manager': typeof LayoutContentManagerIndexRoute
+  '/analytics': typeof AnalyticsIndexRoute
+  '/channel-settings': typeof ChannelSettingsIndexRoute
+  '/community': typeof CommunityIndexRoute
+  '/content-manager': typeof ContentManagerIndexRoute
+  '/video/$id/edit': typeof VideoIdEditIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof LayoutIndexRoute
-  '/analytics': typeof LayoutAnalyticsIndexRoute
-  '/channel-settings': typeof LayoutChannelSettingsIndexRoute
-  '/community': typeof LayoutCommunityIndexRoute
-  '/content-manager': typeof LayoutContentManagerIndexRoute
+  '/analytics': typeof AnalyticsIndexRoute
+  '/channel-settings': typeof ChannelSettingsIndexRoute
+  '/community': typeof CommunityIndexRoute
+  '/content-manager': typeof ContentManagerIndexRoute
+  '/video/$id/edit': typeof VideoIdEditIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/_layout': typeof LayoutRouteWithChildren
-  '/_layout/': typeof LayoutIndexRoute
-  '/_layout/analytics/': typeof LayoutAnalyticsIndexRoute
-  '/_layout/channel-settings/': typeof LayoutChannelSettingsIndexRoute
-  '/_layout/community/': typeof LayoutCommunityIndexRoute
-  '/_layout/content-manager/': typeof LayoutContentManagerIndexRoute
+  '/analytics/': typeof AnalyticsIndexRoute
+  '/channel-settings/': typeof ChannelSettingsIndexRoute
+  '/community/': typeof CommunityIndexRoute
+  '/content-manager/': typeof ContentManagerIndexRoute
+  '/video/$id/edit/': typeof VideoIdEditIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | ''
-    | '/'
     | '/analytics'
     | '/channel-settings'
     | '/community'
     | '/content-manager'
+    | '/video/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/analytics'
     | '/channel-settings'
     | '/community'
     | '/content-manager'
+    | '/video/$id/edit'
   id:
     | '__root__'
-    | '/_layout'
-    | '/_layout/'
-    | '/_layout/analytics/'
-    | '/_layout/channel-settings/'
-    | '/_layout/community/'
-    | '/_layout/content-manager/'
+    | '/analytics/'
+    | '/channel-settings/'
+    | '/community/'
+    | '/content-manager/'
+    | '/video/$id/edit/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  LayoutRoute: typeof LayoutRouteWithChildren
+  AnalyticsIndexRoute: typeof AnalyticsIndexRoute
+  ChannelSettingsIndexRoute: typeof ChannelSettingsIndexRoute
+  CommunityIndexRoute: typeof CommunityIndexRoute
+  ContentManagerIndexRoute: typeof ContentManagerIndexRoute
+  VideoIdEditIndexRoute: typeof VideoIdEditIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  LayoutRoute: LayoutRouteWithChildren,
+  AnalyticsIndexRoute: AnalyticsIndexRoute,
+  ChannelSettingsIndexRoute: ChannelSettingsIndexRoute,
+  CommunityIndexRoute: CommunityIndexRoute,
+  ContentManagerIndexRoute: ContentManagerIndexRoute,
+  VideoIdEditIndexRoute: VideoIdEditIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -199,38 +169,27 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_layout"
+        "/analytics/",
+        "/channel-settings/",
+        "/community/",
+        "/content-manager/",
+        "/video/$id/edit/"
       ]
     },
-    "/_layout": {
-      "filePath": "_layout.tsx",
-      "children": [
-        "/_layout/",
-        "/_layout/analytics/",
-        "/_layout/channel-settings/",
-        "/_layout/community/",
-        "/_layout/content-manager/"
-      ]
+    "/analytics/": {
+      "filePath": "analytics/index.tsx"
     },
-    "/_layout/": {
-      "filePath": "_layout/index.tsx",
-      "parent": "/_layout"
+    "/channel-settings/": {
+      "filePath": "channel-settings/index.tsx"
     },
-    "/_layout/analytics/": {
-      "filePath": "_layout/analytics/index.tsx",
-      "parent": "/_layout"
+    "/community/": {
+      "filePath": "community/index.tsx"
     },
-    "/_layout/channel-settings/": {
-      "filePath": "_layout/channel-settings/index.tsx",
-      "parent": "/_layout"
+    "/content-manager/": {
+      "filePath": "content-manager/index.tsx"
     },
-    "/_layout/community/": {
-      "filePath": "_layout/community/index.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/content-manager/": {
-      "filePath": "_layout/content-manager/index.tsx",
-      "parent": "/_layout"
+    "/video/$id/edit/": {
+      "filePath": "video/$id/edit/index.tsx"
     }
   }
 }
