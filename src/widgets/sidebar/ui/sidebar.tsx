@@ -14,27 +14,14 @@ const mainLinks: Array<SidebarLink> = [
   { label: 'Community', to: '/community', icon: '#' },
 ]
 
-const footerItems = [
-  {
-    label: 'Settings',
-    icon: '#',
-    content: '',
-  },
-  {
-    label: 'Feedback',
-    icon: '#',
-    content: '',
-  },
-]; 
-
 export const Sidebar = ({ className, ...props }: ComponentProps<'nav'>) => {
   return (
-    <nav className={cn('flex flex-col justify-between min-h-screen', className)} {...props}>
+    <nav className={cn('flex flex-col justify-between min-h-[calc(100vh-2rem)]', className)} {...props}>
       <div className='flex flex-col'>
         <SidebarHeader />
         <SidebarMain links={mainLinks}/>
       </div>
-      <SidebarFooter items={footerItems} />
+        <SidebarFooter />
     </nav>
   )
 }
