@@ -22,8 +22,7 @@ export function SidebarFooter({
       {items.map(({ label, icon, content }) => (
         <Sheet key={label}>
           <SheetTrigger asChild>
-            <Button variant="ghost" className="w-full flex items-center justify-center">
-              {icon && <span className="mr-2">{icon}</span>}
+            <Button variant="ghost" className="w-full flex justify-start">
               {label}
             </Button>
           </SheetTrigger>
