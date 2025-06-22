@@ -1,36 +1,42 @@
-import type { ComponentProps, ReactNode } from 'react';
-import { Button, Sheet, SheetTrigger, SheetContent } from '@/shared/ui';
+import { SidebarSettingsDialog } from './settings'
+import { Button, 
+Sheet,
+SheetTrigger, 
+SheetContent, 
+Dialog,
+DialogTrigger,
+DialogTitle,
+DialogContent } from '@/shared/ui';
 import { cn } from '@/shared/lib/utils';
 
-export interface FooterItem {
-  label: string;
-  icon?: ReactNode;
-  content: ReactNode;
-}
-
-export interface SidebarFooterProps extends ComponentProps<'div'> {
-  items: Array<FooterItem>;
-}
-
 export function SidebarFooter({
-  items,
-  className,
   ...props
-}: SidebarFooterProps) {
+}) {
   return (
-    <div className={cn('space-y-2 p-2', className)} {...props}>
-      {items.map(({ label, icon, content }) => (
-        <Sheet key={label}>
+    <div className={cn('space-y-2 p-2')} {...props}>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="ghost" className="w-full flex justify-start">
+            Settings
+            </Button>
+          </DialogTrigger>
+          <DialogContent className='min-w-[60vw] min-h-[80vh]'>
+            <DialogTitle>
+              Settings
+            </DialogTitle>
+            <SidebarSettingsDialog />
+          </DialogContent>
+        </Dialog>
+        <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" className="w-full flex justify-start">
-              {label}
+            Feedback
             </Button>
           </SheetTrigger>
           <SheetContent side="right">
-            {content}
+
           </SheetContent>
         </Sheet>
-      ))}
     </div>
   );
 }
