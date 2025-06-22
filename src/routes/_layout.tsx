@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_layout')({
 function AppLayout() {
   return (
     <div className="bg-[#fafafa] min-h-screen">
-      <div className="flex">
+      <div className="flex p-4">
         <Sidebar className="p-6 mr-2" />
         <div className="bg-white rounded-xl w-full">
           <Header />
