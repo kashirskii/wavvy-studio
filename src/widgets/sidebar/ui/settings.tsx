@@ -1,28 +1,28 @@
-import { Bot, Home, Settings, User } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
+import { Bot, Home, Settings, User } from 'lucide-react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs'
 
 const tabs = [
   {
-    name: "Home",
-    value: "home",
+    name: 'Home',
+    value: 'home',
     icon: Home,
   },
   {
-    name: "Profile",
-    value: "profile",
+    name: 'Profile',
+    value: 'profile',
     icon: User,
   },
   {
-    name: "Messages",
-    value: "messages",
+    name: 'Messages',
+    value: 'messages',
     icon: Bot,
   },
   {
-    name: "Settings",
-    value: "settings",
+    name: 'Settings',
+    value: 'settings',
     icon: Settings,
   },
-];
+]
 
 export const SidebarSettingsDialog = () => {
   return (
@@ -51,5 +51,5 @@ export const SidebarSettingsDialog = () => {
         ))}
       </div>
     </Tabs>
-  );
+  )
 }

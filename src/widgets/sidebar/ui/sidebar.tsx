@@ -1,4 +1,3 @@
-
 import { SidebarHeader } from './header'
 import { SidebarFooter } from './footer'
 import { SidebarMain } from './main'
@@ -16,12 +15,15 @@ const mainLinks: Array<SidebarLink> = [
 
 export const Sidebar = ({ className, ...props }: ComponentProps<'nav'>) => {
   return (
-    <nav className={cn('flex flex-col justify-between min-h-[calc(100vh-2rem)]', className)} {...props}>
-      <div className='flex flex-col'>
+    <nav
+      className={cn('flex flex-col justify-between min-h-[calc(100vh-2rem)]', className)}
+      {...props}
+    >
+      <div className="flex flex-col">
         <SidebarHeader />
-        <SidebarMain links={mainLinks}/>
+        <SidebarMain links={mainLinks} />
       </div>
-        <SidebarFooter />
+      <SidebarFooter />
     </nav>
   )
 }

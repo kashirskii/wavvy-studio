@@ -1,8 +1,10 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { Toaster } from 'sonner'
 import { Sidebar } from '@/widgets/sidebar/ui/sidebar'
 import { Header } from '@/widgets/header/ui/header'
 import { NotFound } from '@/pages/not-found'
+
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -24,6 +26,7 @@ function RootComponent() {
         </div>
       </div>
       <TanStackRouterDevtools />
+      <Toaster />
     </>
   )
 }
