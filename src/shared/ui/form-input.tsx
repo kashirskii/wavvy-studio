@@ -43,7 +43,7 @@ export const FormInput = React.forwardRef<HTMLInputElement, CustomInputWithHelpP
             id={finalId}
             className={cn(error && 'border-destructive focus-visible:ring-destructive', className)}
             ref={ref}
-            {...props}
+            {...props} // This spreads all remaining props including value and onChange
           />
           {!label && helpText && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2">
