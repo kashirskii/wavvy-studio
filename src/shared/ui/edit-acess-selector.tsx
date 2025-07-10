@@ -5,7 +5,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  Button
+  Button,
 } from '@/shared/ui'
 
 interface AccessSelectorProps {
@@ -24,7 +24,7 @@ export function AccessSelector({ initialAccess, onChange }: AccessSelectorProps)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' className="w-full justify-between">
+        <Button variant="outline" className="w-full justify-between">
           {access} <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
@@ -33,9 +33,7 @@ export function AccessSelector({ initialAccess, onChange }: AccessSelectorProps)
           <DropdownMenuItem
             key={option}
             onSelect={() => handleSelect(option)}
-            className={`flex justify-between ${
-              access === option ? 'font-semibold' : ''
-            }`}
+            className={`flex justify-between ${access === option ? 'font-semibold' : ''}`}
           >
             {option}
           </DropdownMenuItem>

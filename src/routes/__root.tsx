@@ -5,7 +5,6 @@ import { Sidebar } from '@/widgets/sidebar/ui/sidebar'
 import { Header } from '@/widgets/header/ui/header'
 import { NotFound } from '@/pages/not-found'
 
-
 export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: () => <NotFound />,

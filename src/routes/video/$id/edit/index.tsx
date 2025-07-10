@@ -27,13 +27,13 @@ type FormFields = {
 }
 
 const VideoData: VideoEntity = {
-  id: "1",
+  id: '1',
   name: 'Sample Video',
   description: 'This is a sample video description.',
   src: 'https://www.w3schools.com/html/mov_bbb.mp4', // refactor to fetch function
   thumbnail: 'https://www.w3schools.com/html/pic_trulli.jpg', // refactor to fetch function
   playlists: ['Playlist 1', 'Playlist 2', 'Playlist 3'], // refactor to fetch function
-  access: "Public", // refactor to fetch function
+  access: 'Public', // refactor to fetch function
   createdAt: new Date(),
   updatedAt: new Date(),
 }
@@ -62,7 +62,7 @@ function RouteComponent() {
   }
 
   const handleAccessChange = (newAccess: 'Public' | 'Unlisted' | 'Private') => {
-  // todo: handle access change logic
+    // todo: handle access change logic
     console.log('Access changed to:', newAccess)
   }
 
@@ -122,10 +122,7 @@ function RouteComponent() {
               <div className="flex flex-col gap-2">
                 <div className="text-sm">Playlists</div>
                 <div>Choose a playlist to add your video to.</div>
-                <select
-                  {...register('playlists')}
-                  className="w-full h-10 border rounded-md px-3"
-                >
+                <select {...register('playlists')} className="w-full h-10 border rounded-md px-3">
                   <option value="">Select a playlist</option>
                   {VideoData.playlists?.map((playlist, index) => (
                     <option key={index} value={playlist}>
@@ -155,10 +152,7 @@ function RouteComponent() {
             </DropdownMenu>
           </div>
           <EditPlayer src={VideoData.src} />
-          <AccessSelector
-                  initialAccess={VideoData.access}
-                  onChange={handleAccessChange}
-                />
+          <AccessSelector initialAccess={VideoData.access} onChange={handleAccessChange} />
         </div>
       </form>
     </div>
