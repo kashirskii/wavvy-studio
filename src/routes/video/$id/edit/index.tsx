@@ -20,7 +20,7 @@ export const Route = createFileRoute('/video/$id/edit/')({
 })
 
 const formSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
+  name: z.string().max(100, 'Name is too long'),
   description: z.string().max(500, 'Description is too long').optional(),
   playlists: z.string().optional(),
   thumbnail: z.instanceof(FileList).optional(),
@@ -31,13 +31,13 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>
 
 const VideoData: VideoEntity = {
-  id: "1",
+  id: '1',
   name: 'Sample Video',
   description: 'This is a sample video description.',
   src: 'https://www.w3schools.com/html/mov_bbb.mp4',
   thumbnail: 'https://www.w3schools.com/html/pic_trulli.jpg',
   playlists: ['Playlist 1', 'Playlist 2', 'Playlist 3'],
-  access: "Public",
+  access: 'Public',
   createdAt: new Date(),
   updatedAt: new Date(),
 }
@@ -55,14 +55,14 @@ function RouteComponent() {
       name: VideoData.name,
       description: VideoData.description,
       access: VideoData.access,
-    }
+    },
   })
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
       console.log('Form data:', data)
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error submitting form:', error)
     }
   }
 
@@ -77,13 +77,13 @@ function RouteComponent() {
   }
 
   const handleUpload = (file: File, field: 'thumbnail' | 'video') => {
-    const fileList = new DataTransfer();
-    fileList.items.add(file);
-    setValue(field, fileList.files, { shouldValidate: true });
+    const fileList = new DataTransfer()
+    fileList.items.add(file)
+    setValue(field, fileList.files, { shouldValidate: true })
   }
 
   const handleAccessChange = (newAccess: 'Public' | 'Unlisted' | 'Private') => {
-    setValue('access', newAccess, { shouldValidate: true });
+    setValue('access', newAccess, { shouldValidate: true })
   }
 
   const handleUndoChanges = () => {
@@ -91,12 +91,12 @@ function RouteComponent() {
       name: VideoData.name,
       description: VideoData.description,
       access: VideoData.access,
-    });
+    })
   }
 
   return (
     <div className="h-full w-full flex">
-      <form 
+      <form
         className="w-full h-full flex flex-row justify-between"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -149,15 +149,11 @@ function RouteComponent() {
                   }}
                 />
               </div>
-              <div className="flex flex-col gap-2">
-              </div>
+              <div className="flex flex-col gap-2"></div>
               <div className="flex flex-col gap-2">
                 <div className="text-sm">Playlists</div>
                 <div>Choose a playlist to add your video to.</div>
-                <select
-                  {...register('playlists')}
-                  className="w-full h-10 border rounded-md px-3"
-                >
+                <select {...register('playlists')} className="w-full h-10 border rounded-md px-3">
                   <option value="">Select a playlist</option>
                   {VideoData.playlists?.map((playlist, index) => (
                     <option key={index} value={playlist}>
@@ -171,18 +167,10 @@ function RouteComponent() {
         </div>
         <div className="rightside flex flex-col justify-center gap-5 flex-1/4">
           <div className="flex flex-row gap-1 self-end">
-            <Button 
-              type="button"
-              variant="default"
-              onClick={handleUndoChanges}
-            >
+            <Button type="button" variant="default" onClick={handleUndoChanges}>
               Undo changes
             </Button>
-            <Button 
-              type="submit"
-              variant="default"
-              disabled={isSubmitting}
-            >
+            <Button type="submit" variant="default" disabled={isSubmitting}>
               {isSubmitting ? 'Saving...' : 'Submit'}
             </Button>
             <DropdownMenu>
@@ -199,10 +187,7 @@ function RouteComponent() {
             </DropdownMenu>
           </div>
           <EditPlayer src={VideoData.src} />
-          <AccessSelector
-            initialAccess={VideoData.access}
-            onChange={handleAccessChange}
-          />
+          <AccessSelector initialAccess={VideoData.access} onChange={handleAccessChange} />
         </div>
       </form>
     </div>
