@@ -1,1 +1,7 @@
+MSG=$(cat "$1")
+
+if [[ ! $MSG =~ 🦄 ]]; then
+  echo "$MSG 🦄" > "$1"
+fi
+
 npx --no-install commitlint --edit "$1"
