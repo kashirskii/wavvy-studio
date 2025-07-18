@@ -1,76 +1,93 @@
-import { createFileRoute } from "@tanstack/react-router"
-import { useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { ChevronLeft, ChevronRight, Check } from "lucide-react"
-import { useRegistrationStepper } from "../../shared/useRegistrationStepper"
-import { Button } from "@/shared/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/shared/ui"
-import { Input } from "@/shared/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card"
-import { Progress } from "@/shared/ui/"
-import LoginPasswordInput from "@/shared/ui/login-password-input" // refactor for pass inputs
+import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { ChevronLeft, ChevronRight, Check } from 'lucide-react'
+import { useRegistrationStepper } from '../../shared/useRegistrationStepper'
+import { Button } from '@/shared/ui/button'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/shared/ui'
+import { Input } from '@/shared/ui/input'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui/card'
+import { Progress } from '@/shared/ui/'
+import LoginPasswordInput from '@/shared/ui/login-password-input' // refactor for pass inputs
 
-export const Route = createFileRoute("/register/")({
+export const Route = createFileRoute('/register/')({
   component: RouteComponent,
 })
 
 const formSchema = z
   .object({
-    name: z.string().min(2, "First name must be at least 2 characters"),
-    email: z.email().min(5, "Please enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    name: z.string().min(2, 'First name must be at least 2 characters'),
+    email: z.email().min(5, 'Please enter a valid email address'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
-    path: ["confirmPassword"],
+    path: ['confirmPassword'],
   })
 
 type FormData = z.infer<typeof formSchema>
 
 const stepSchemas = {
   0: z.object({
-    name: z.string().min(2, "First name must be at least 2 characters"),
-    email: z.email("Please enter a valid email address"),
+    name: z.string().min(2, 'First name must be at least 2 characters'),
+    email: z.email('Please enter a valid email address'),
   }),
   1: z
     .object({
-      password: z.string().min(8, "Password must be at least 8 characters"),
+      password: z.string().min(8, 'Password must be at least 8 characters'),
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: "Passwords don't match",
-      path: ["confirmPassword"],
+      path: ['confirmPassword'],
     }),
 }
 
 const steps = [
   {
-    id: "personal",
-    title: "Personal Information",
-    description: "Tell us about yourself",
-    fields: ["name", "email"] as (Array<keyof FormData>),
+    id: 'personal',
+    title: 'Personal Information',
+    description: 'Tell us about yourself',
+    fields: ['name', 'email'] as Array<keyof FormData>,
   },
   {
-    id: "account",
-    title: "Account Details",
-    description: "Create your account",
-    fields: ["password", "confirmPassword"] as (Array<keyof FormData>),
-  },  
+    id: 'account',
+    title: 'Account Details',
+    description: 'Create your account',
+    fields: ['password', 'confirmPassword'] as Array<keyof FormData>,
+  },
 ]
 
 function RouteComponent() {
-  const { currentStep, setStep, nextStep, prevStep, completedSteps, markStepCompleted, isStepCompleted, resetStepCompletion } = useRegistrationStepper()
+  const {
+    currentStep,
+    setStep,
+    nextStep,
+    prevStep,
+    completedSteps,
+    markStepCompleted,
+    isStepCompleted,
+    resetStepCompletion,
+  } = useRegistrationStepper()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     },
   })
 
@@ -93,15 +110,15 @@ function RouteComponent() {
     }
   }
 
-const handleNextStep = async () => {
-  const isValid = await validateCurrentStep()
-  if (isValid) {
-    markStepCompleted(currentStep)
-    nextStep()
-  }
-} // debug scenario when nextStep is called without validation (e.g. all fields has been validated and this function is called)
+  const handleNextStep = async () => {
+    const isValid = await validateCurrentStep()
+    if (isValid) {
+      markStepCompleted(currentStep)
+      nextStep()
+    }
+  } // debug scenario when nextStep is called without validation (e.g. all fields has been validated and this function is called)
 
-const handlePrevStep = () => {
+  const handlePrevStep = () => {
     prevStep()
   }
 
@@ -130,10 +147,10 @@ const handlePrevStep = () => {
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
                         index === currentStep
-                          ? "border-primary bg-primary text-primary-foreground"
+                          ? 'border-primary bg-primary text-primary-foreground'
                           : completedSteps.includes(index)
-                            ? "border-green-500 bg-green-500 text-white"
-                            : "border-muted-foreground bg-background"
+                            ? 'border-green-500 bg-green-500 text-white'
+                            : 'border-muted-foreground bg-background'
                       }`}
                     >
                       {completedSteps.includes(index) ? (
@@ -144,7 +161,9 @@ const handlePrevStep = () => {
                     </div>
                     <div className="text-center mt-2">
                       <div className="text-sm font-medium">{step.title}</div>
-                      <div className="text-xs text-muted-foreground hidden sm:block">{step.description}</div>
+                      <div className="text-xs text-muted-foreground hidden sm:block">
+                        {step.description}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -183,7 +202,6 @@ const handlePrevStep = () => {
               )}
               {currentStep === 1 && (
                 <div className="space-y-4">
-
                   <FormField
                     control={form.control}
                     name="password"
@@ -193,7 +211,9 @@ const handlePrevStep = () => {
                         <FormControl>
                           <Input placeholder="Enter your password" type="password" {...field} />
                         </FormControl>
-                        <FormDescription>Password must be at least 8 characters long.</FormDescription>
+                        <FormDescription>
+                          Password must be at least 8 characters long.
+                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -226,7 +246,11 @@ const handlePrevStep = () => {
                 </Button>
 
                 {currentStep < steps.length - 1 ? (
-                  <Button type="button" onClick={() => handleNextStep()} className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    onClick={() => handleNextStep()}
+                    className="flex items-center gap-2"
+                  >
                     Next
                     <ChevronRight className="w-4 h-4" />
                   </Button>
