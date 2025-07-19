@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
 } from '@/shared/ui'
 import EditPlayer from '@/shared/ui/edit-player'
-import { type VideoEntity } from '@/shared/api/video'
+import { type VideoEntity } from '@/api/video'
 
 export const Route = createFileRoute('/video/$id/edit/')({
   component: RouteComponent,

@@ -1,6 +1,6 @@
+import { HeaderLeft } from './header-left'
 import type { ComponentProps } from 'react'
 
-import { HeaderLeft } from './header-left'
 import { Separator } from '@/shared/ui'
 import { cn } from '@/shared/lib/utils'
 
