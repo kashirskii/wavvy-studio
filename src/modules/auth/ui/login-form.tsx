@@ -1,19 +1,18 @@
 import { EyeOff, Eye } from 'lucide-react'
-import { Form, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, type LoginFields } from '../model/login-schema'
 import {
   Button,
+  Form,
   FormControl,
   FormField,
-  FormInput,
   FormItem,
   FormLabel,
   FormMessage,
+  Input,
   Tooltip,
-  TooltipContent,
-  TooltipTrigger,
 } from '@/shared/ui'
 
 export const LoginForm = () => {
@@ -41,7 +40,7 @@ export const LoginForm = () => {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <FormInput {...field} placeholder="Enter your username" />
+                <Input {...field} placeholder="Enter your username" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -56,27 +55,23 @@ export const LoginForm = () => {
               <FormLabel>Password</FormLabel>
               <div className="relative">
                 <FormControl>
-                  <input
-                    {...field}
-                    type={showPassword ? 'text' : 'password'}
-                    className="mt-2 w-full rounded-lg border bg-transparent px-3 py-2 shadow-sm outline-none focus:border-rose-600"
-                    placeholder="Enter your password"
-                  />
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      type={showPassword ? 'text' : 'password'}
+                      className="mt-2 w-full rounded-lg border bg-transparent px-3 py-2 shadow-sm outline-none focus:border-rose-600"
+                      placeholder="Enter your password"
+                    />
+                    <Tooltip text={showPassword ? 'Hide password' : 'Show password'}>
+                      <div
+                        className="absolute right-3 top-1/2 -translate-y-1/2"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </div>
+                    </Tooltip>
+                  </div>
                 </FormControl>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      className="absolute inset-y-0 right-0 mr-3 mt-3 text-primary"
-                    >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {showPassword ? 'Hide password' : 'Show password'}
-                  </TooltipContent>
-                </Tooltip>
               </div>
               <FormMessage />
             </FormItem>

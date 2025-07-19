@@ -25,6 +25,7 @@ export function SidebarFooter({ ...props }) {
           <SidebarSettingsDialog />
         </DialogContent>
       </Dialog>
+
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" className="w-full flex justify-start">
