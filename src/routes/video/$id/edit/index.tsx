@@ -1,19 +1,24 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { EllipsisVertical, Image } from 'lucide-react'
 import {
-  AccessSelector,
   Button,
+  Input,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  Input,
 } from '@/shared/ui'
 import EditPlayer from '@/shared/ui/edit-player'
 import { type VideoEntity } from '@/api/video'
+import { AccessSelector } from '@/shared/ui/edit-acess-selector'
 
 export const Route = createFileRoute('/video/$id/edit/')({
   component: VideoEditForm,
@@ -37,7 +42,7 @@ const VideoData: VideoEntity = {
   src: 'https://www.w3schools.com/html/mov_bbb.mp4',
   thumbnail: 'https://www.w3schools.com/html/pic_trulli.jpg',
   playlists: ['Playlist 1', 'Playlist 2', 'Playlist 3'],
-  access: 'Public',
+  access: 'Private',
   createdAt: new Date(),
   updatedAt: new Date(),
 }
@@ -45,6 +50,7 @@ const VideoData: VideoEntity = {
 function VideoEditForm() {
   const {
     register,
+    control,
     handleSubmit,
     formState: { isSubmitting },
     setValue,
@@ -59,11 +65,7 @@ function VideoEditForm() {
   })
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      console.log('Form data:', data)
-    } catch (error) {
-      console.error('Error submitting form:', error)
-    }
+    console.log('Form data:', data)
   }
 
   const handleDownloadVideo = () => {
@@ -102,26 +104,15 @@ function VideoEditForm() {
       >
         <div className="leftside flex flex-col flex-3/4 gap-5">
           <h2 className="text-2xl font-bold">Video details</h2>
-          <div className="grid w-full pr-6 items-center gap-3">
-            <Input
-              {...register('name')}
-              type="text"
-              placeholder="Video name"
-              tooltip
-              tooltipText="Enter the name of your video."
-            />
-            <div className="relative">
-              <Input
-                {...register('description')}
-                type="text"
-                placeholder="Description (optional)"
-                tooltip
-                tooltipText="Add a description for your video."
-              />
-            </div>
+          <div className="grid w-full pr-6 items-center gap-4">
+            <Input {...register('name')} type="text" placeholder="Video name" />
+            <Input {...register('description')} type="text" placeholder="Description (optional)" />
+
             <div className="flex flex-col gap-2">
               <div className="text-sm">Icon</div>
-              <div>Choose an icon that will involve other users.</div>
+              <div className="text-muted-foreground text-sm">
+                Choose an icon that will involve other users.
+              </div>
 
               <div className="flex flex-row gap-2">
                 <img
@@ -132,8 +123,8 @@ function VideoEditForm() {
                 <label
                   htmlFor="thumbnail-upload"
                   className="w-48 h-32 flex flex-col items-center justify-center 
-                 border-2 border-dashed border-gray-300 rounded-md 
-                 cursor-pointer hover:border-gray-400"
+                    border-2 border-dashed border-gray-300 rounded-md 
+                    cursor-pointer hover:border-gray-400"
                 >
                   <Image />
                   <div>Upload photo</div>
@@ -151,28 +142,41 @@ function VideoEditForm() {
                   }}
                 />
               </div>
-              <div className="flex flex-col gap-2"></div>
-              <div className="flex flex-col gap-2">
-                <div className="text-sm">Playlists</div>
-                <div>Choose a playlist to add your video to.</div>
-                <select {...register('playlists')} className="w-full h-10 border rounded-md px-3">
-                  <option value="">Select a playlist</option>
-                  {VideoData.playlists?.map((playlist, index) => (
-                    <option key={index} value={playlist}>
-                      {playlist}
-                    </option>
-                  ))}
-                </select>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="text-sm">Playlists</div>
+              <div className="text-muted-foreground text-sm">
+                Choose a playlist to add your video to.
               </div>
+              <Controller
+                control={control}
+                name="playlists"
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full h-10">
+                      <SelectValue placeholder="Select a playlist" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {VideoData.playlists?.map((playlist, index) => (
+                        <SelectItem key={index} value={playlist}>
+                          {playlist}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </div>
           </div>
         </div>
+
         <div className="rightside flex flex-col justify-center gap-5 flex-1/4">
           <div className="flex flex-row gap-1 self-end">
-            <Button type="button" variant="default" onClick={handleUndoChanges}>
+            <Button type="button" variant="secondary" onClick={handleUndoChanges}>
               Undo changes
             </Button>
-            <Button type="submit" variant="default" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Saving...' : 'Submit'}
             </Button>
             <DropdownMenu>
@@ -188,7 +192,9 @@ function VideoEditForm() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+
           <EditPlayer src={VideoData.src} />
+
           <AccessSelector initialAccess={VideoData.access} onChange={handleAccessChange} />
         </div>
       </form>

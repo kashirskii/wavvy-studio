@@ -13,6 +13,7 @@ import {
   FormMessage,
   Input,
 } from '@/shared/ui'
+import { SecureInput } from '@/shared/ui/secure-input'
 
 export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -55,15 +56,7 @@ export const LoginForm = () => {
               <div className="relative">
                 <FormControl>
                   <div className="relative">
-                    <Input
-                      {...field}
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="Enter your password"
-                      tooltip
-                      tooltipIcon={showPassword ? Eye : EyeOff}
-                      tooltipText={showPassword ? 'Hide password' : 'Show password'}
-                      tooltipClick={() => setShowPassword(!showPassword)}
-                    />
+                    <SecureInput {...field} placeholder="Enter your password" />
                   </div>
                 </FormControl>
               </div>

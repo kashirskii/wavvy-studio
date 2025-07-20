@@ -3,49 +3,11 @@ import { HelpCircle } from 'lucide-react'
 import { Tooltip } from './tooltip'
 import { cn } from '@/shared/lib/utils'
 
-type InputProps = React.ComponentProps<'input'> & {
-  tooltip?: boolean
-  tooltipIcon?: React.ComponentType<React.SVGProps<SVGSVGElement>>
-  tooltipText?: string
-  tooltipClick?: () => void
-  children?: React.ReactNode
+export interface InputProps extends React.ComponentProps<'input'> {
+  tooltip?: string
 }
 
-function Input({
-  className,
-  type,
-  tooltip,
-  tooltipIcon: TooltipIcon,
-  tooltipText,
-  tooltipClick,
-  ...props
-}: InputProps) {
-  const IconComponent = TooltipIcon || (tooltip ? HelpCircle : null)
-
-  const rightButton = tooltip && IconComponent && (
-    <div className="absolute right-3 top-1/2 -translate-y-1/2">
-      {tooltipText ? (
-        <Tooltip text={tooltipText}>
-          <button
-            type="button"
-            onClick={tooltipClick}
-            className="text-muted-foreground hover:text-foreground focus:outline-none transition-colors cursor-help"
-          >
-            <IconComponent className="w-4 h-4" />
-          </button>
-        </Tooltip>
-      ) : (
-        <button
-          type="button"
-          onClick={tooltipClick}
-          className="text-muted-foreground hover:text-foreground focus:outline-none transition-colors cursor-help"
-        >
-          <IconComponent className="w-4 h-4" />
-        </button>
-      )}
-    </div>
-  )
-
+export const Input = ({ className, type, tooltip, ...props }: InputProps) => {
   return (
     <div className="relative flex w-full items-center">
       <input
@@ -59,10 +21,11 @@ function Input({
         )}
         {...props}
       />
-      {rightButton}
-      {props.children}
+      {tooltip ? (
+        <Tooltip text={tooltip}>
+          <HelpCircle className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors cursor-help" />
+        </Tooltip>
+      ) : null}
     </div>
   )
 }
-
-export { Input }
