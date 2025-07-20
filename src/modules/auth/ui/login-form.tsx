@@ -12,7 +12,6 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  Tooltip,
 } from '@/shared/ui'
 
 export const LoginForm = () => {
@@ -59,17 +58,12 @@ export const LoginForm = () => {
                     <Input
                       {...field}
                       type={showPassword ? 'text' : 'password'}
-                      className="mt-2 w-full rounded-lg border bg-transparent px-3 py-2 shadow-sm outline-none focus:border-rose-600"
                       placeholder="Enter your password"
+                      tooltip
+                      tooltipIcon={showPassword ? Eye : EyeOff}
+                      tooltipText={showPassword ? 'Hide password' : 'Show password'}
+                      tooltipClick={() => setShowPassword(!showPassword)}
                     />
-                    <Tooltip text={showPassword ? 'Hide password' : 'Show password'}>
-                      <div
-                        className="absolute right-3 top-1/2 -translate-y-1/2"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                      </div>
-                    </Tooltip>
                   </div>
                 </FormControl>
               </div>

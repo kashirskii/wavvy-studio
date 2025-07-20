@@ -2,23 +2,21 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { EllipsisVertical, HelpCircle, Image } from 'lucide-react'
+import { EllipsisVertical, Image } from 'lucide-react'
 import {
   AccessSelector,
   Button,
-  TooltipInput,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   Input,
-  Tooltip,
 } from '@/shared/ui'
 import EditPlayer from '@/shared/ui/edit-player'
 import { type VideoEntity } from '@/api/video'
 
 export const Route = createFileRoute('/video/$id/edit/')({
-  component: RouteComponent,
+  component: VideoEditForm,
 })
 
 const formSchema = z.object({
@@ -44,7 +42,7 @@ const VideoData: VideoEntity = {
   updatedAt: new Date(),
 }
 
-function RouteComponent() {
+function VideoEditForm() {
   const {
     register,
     handleSubmit,
@@ -54,8 +52,8 @@ function RouteComponent() {
   } = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: VideoData.name,
-      description: VideoData.description,
+      name: '',
+      description: '',
       access: VideoData.access,
     },
   })
@@ -105,22 +103,21 @@ function RouteComponent() {
         <div className="leftside flex flex-col flex-3/4 gap-5">
           <h2 className="text-2xl font-bold">Video details</h2>
           <div className="grid w-full pr-6 items-center gap-3">
-            <TooltipInput
+            <Input
               {...register('name')}
               type="text"
               placeholder="Video name"
-              // error={errors.name?.message}
-              helpText="Give your video a descriptive name to help others find it."
+              tooltip
+              tooltipText="Enter the name of your video."
             />
             <div className="relative">
               <Input
                 {...register('description')}
                 type="text"
                 placeholder="Description (optional)"
+                tooltip
+                tooltipText="Add a description for your video."
               />
-              <Tooltip text="Add a description to your video. This will help others understand what the video is about.">
-                <HelpCircle className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors cursor-help absolute right-3 top-1/2 -translate-y-1/2" />
-              </Tooltip>
             </div>
             <div className="flex flex-col gap-2">
               <div className="text-sm">Icon</div>
