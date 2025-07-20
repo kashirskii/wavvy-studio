@@ -6,7 +6,7 @@ import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from 'lucide-react'
 import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
 
-export default function LoginPasswordInput() {
+export default function RegisterPasswordInput() {
   const id = useId()
   const [password, setPassword] = useState('')
   const [isVisible, setIsVisible] = useState<boolean>(false)
