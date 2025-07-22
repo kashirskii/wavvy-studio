@@ -103,10 +103,20 @@ function VideoEditForm() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="leftside flex flex-col flex-3/4 gap-5">
-          <h2 className="text-2xl font-bold">Video details</h2>
+          <h2 className="text-2xl font-bold pt-1">Video details</h2>
           <div className="grid w-full pr-6 items-center gap-4">
-            <Input {...register('name')} type="text" placeholder="Video name" />
-            <Input {...register('description')} type="text" placeholder="Description (optional)" />
+            <Input
+              {...register('name')}
+              type="text"
+              placeholder="Video name"
+              tooltip="Used to identify the user during registration. Displayed on-screen and stored in the video metadata."
+            />
+            <Input
+              {...register('description')}
+              type="text"
+              placeholder="Description (optional)"
+              tooltip="A brief summary or additional details about the video."
+            />
 
             <div className="flex flex-col gap-2">
               <div className="text-sm">Icon</div>
@@ -171,7 +181,7 @@ function VideoEditForm() {
           </div>
         </div>
 
-        <div className="rightside flex flex-col justify-center gap-5 flex-1/4">
+        <div className="rightside flex flex-col gap-5 flex-1/4">
           <div className="flex flex-row gap-1 self-end">
             <Button type="button" variant="secondary" onClick={handleUndoChanges}>
               Undo changes
