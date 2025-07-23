@@ -1,6 +1,7 @@
-import { Copy } from 'lucide-react'
+import { useState } from 'react'
+import { Copy, Check } from 'lucide-react'
 import { toast } from 'sonner'
-import { Button } from '@/shared/ui'
+import { Button, Tooltip } from '@/shared/ui'
 import { MinifiedVideoPlayer } from '@/modules/video'
 
 interface EditPlayerProps {
@@ -8,14 +9,17 @@ interface EditPlayerProps {
 }
 
 export default function EditPlayer({ src }: EditPlayerProps) {
+  const [isCopied, setIsCopied] = useState(false)
   const handleCopy = () => {
     navigator.clipboard
       .writeText(src)
       .then(() => {
+        setIsCopied(true)
         toast('Success!', {
           description: 'Link copied to clipboard',
           duration: 2000,
         })
+        setTimeout(() => setIsCopied(false), 2000)
       })
       .catch((err) => {
         toast('Failed to copy link: ', err)
@@ -42,9 +46,11 @@ export default function EditPlayer({ src }: EditPlayerProps) {
             <Button variant="link" className="p-0" type="button" onClick={handleOpenLink}>
               {src}
             </Button>
-            <Button variant="ghost" type="button" onClick={handleCopy}>
-              <Copy />
-            </Button>
+            <Tooltip text={isCopied ? 'Link copied!' : 'Copy link'}>
+              <Button variant="ghost" type="button" onClick={handleCopy}>
+                {isCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              </Button>
+            </Tooltip>
           </div>
           <div className="text-sm">Video quality</div>
           {/* TODO: provide pseudocode for qualities */}
