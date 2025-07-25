@@ -119,7 +119,7 @@ export const useFileUpload = (
           return
         }
 
-        const error = validateFile(file)
+        const error = validateFile(file, { maxSize, accept })
         if (error) {
           errors.push(error)
         } else {
