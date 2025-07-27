@@ -1,3 +1,5 @@
+import type { ChangeEvent, InputHTMLAttributes } from 'react'
+
 export type FileMetadata = {
   name: string
   size: number
@@ -30,13 +32,13 @@ export type FileUploadState = {
 
 export type FileUploadActions = {
   addFiles: (files: FileList | Array<File>) => void
-  removeFile: (id: string) => void
   clearFiles: () => void
   clearErrors: () => void
-  handleDragEnter: (e: DragEvent<HTMLElement>) => void
-  handleDragLeave: (e: DragEvent<HTMLElement>) => void
-  handleDragOver: (e: DragEvent<HTMLElement>) => void
-  handleDrop: (e: DragEvent<HTMLElement>) => void
+  removeFile: (id: string) => void
+  handleDragEnter: (e: React.DragEvent<HTMLElement>) => void
+  handleDragLeave: (e: React.DragEvent<HTMLElement>) => void
+  handleDragOver: (e: React.DragEvent<HTMLElement>) => void
+  handleDrop: (e: React.DragEvent<HTMLElement>) => void
   handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void
   openFileDialog: () => void
   getInputProps: (

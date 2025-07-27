@@ -1,1 +1,1 @@
-export * from './useFileUpload.tsx'
+export * from './useFileUpload'
