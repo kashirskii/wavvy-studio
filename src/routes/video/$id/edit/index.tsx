@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { EllipsisVertical, Image } from 'lucide-react'
+import { EllipsisVertical } from 'lucide-react'
 import {
   Button,
   Input,
@@ -19,6 +19,7 @@ import {
 import EditPlayer from '@/shared/ui/edit-player'
 import { type VideoEntity } from '@/api/video'
 import { AccessSelector } from '@/shared/ui/edit-acess-selector'
+import { ThumbnailManager } from '@/modules/thumbnail'
 
 export const Route = createFileRoute('/video/$id/edit/')({
   component: VideoEditForm,
@@ -123,35 +124,19 @@ function VideoEditForm() {
               <div className="text-muted-foreground text-sm">
                 Choose an icon that will involve other users.
               </div>
-
-              <div className="flex flex-row gap-2">
-                <img
-                  src={VideoData.thumbnail}
-                  alt="Video thumbnail"
-                  className="object-cover rounded-md aspect-video w-48"
-                />
-                <label
-                  htmlFor="thumbnail-upload"
-                  className="w-48 h-32 flex flex-col items-center justify-center 
-                    border-2 border-dashed border-gray-300 rounded-md 
-                    cursor-pointer hover:border-gray-400"
-                >
-                  <Image />
-                  <div>Upload photo</div>
-                </label>
-                <input
-                  id="thumbnail-upload"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0]
-                    if (file) {
-                      handleUpload(file, 'thumbnail')
-                    }
-                  }}
-                />
-              </div>
+              <ThumbnailManager />
+              <input
+                id="thumbnail-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) {
+                    handleUpload(file, 'thumbnail')
+                  }
+                }}
+              />
             </div>
 
             <div className="flex flex-col gap-2">
