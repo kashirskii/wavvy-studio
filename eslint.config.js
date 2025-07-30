@@ -21,5 +21,6 @@ export default [
       'import/consistent-type-specifier-style': 'off',
       '@typescript-eslint/no-unnecessary-condition': 'off',
     },
+    ignores: ['vite.config.js'],
   },
 ]
